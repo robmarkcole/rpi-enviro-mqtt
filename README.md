@@ -3,6 +3,10 @@ Send air quality data from a Pimoroni RPi [Enviro+](https://shop.pimoroni.com/pr
 
 The `mqtt-all.py` script is a fork of the official [luftdaten.py](https://github.com/pimoroni/enviroplus-python/blob/master/examples/luftdaten.py) script. The main difference being that this script uses MQTT to publish data over the local network (vs internet to Luftdaten) so there no dependency on internet connection. Also since you don't need to poll the Luftdaten website for data, latency is almost eliminated and you can visualise data in real time, using a tool like [mqtt-explorer](https://mqtt-explorer.com/) (screenshot below).
 
+<p align="center">
+<img src="https://github.com/robmarkcole/rpi-enviro-mqtt/blob/master/assets/mqtt-explorer-usage.png" width="800">
+</p>
+
 ## Installation & setup
 You should first install the Pimoroni [enviroplus-python](https://github.com/pimoroni/enviroplus-python) library. There is one additional dependency required for this script, which is [paho-mqtt](http://www.eclipse.org/paho/). This can be installed with `pip3 install paho-mqtt`. You need an MQTT broker to receive the data, if you haven't already set one up, a broker can be installed on the rpi with `sudo apt-get install mosquitto mosquitto-clients`. Note this broker will run at startup automatically, which is very convenient. Note also that this broker is unsecured by default, and that this code is only for personal (not professional) use on a secure local network. You should publish some MQTT data from the command line to check the broker is functioning, and verify receipt of this data using the tool of your choice (e.g. mqtt-explorer). Clone this repo to your rpi, making note of the path to `mqtt-all.py` 
 
