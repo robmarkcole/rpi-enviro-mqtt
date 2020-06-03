@@ -85,7 +85,7 @@ I bought the following:
 * [PMS5003 particulate sensor](https://shop.pimoroni.com/products/pms5003-particulate-matter-sensor-with-cable), £25
 * [Raspberry Pi Zero WH (pre-soldered)](https://shop.pimoroni.com/products/raspberry-pi-zero-wh-with-pre-soldered-header), £13
 
-Total cost £86, which is considerably cheaper than commercial sensors with similar sensors, e.g. [uHoo](https://www.amazon.co.uk/uHoo-Indoor-Air-Quality-Sensor/dp/B076PV9X99/ref=sr_1_1?dchild=1&keywords=uhoo&qid=1591168294&sr=8-1) (£325) or [Kaiterra](https://www.amazon.co.uk/Kaiterra-Measures-Chemicals%EF%BC%8C-Temperature-Compatible-Whilte-Gold/dp/B077JWYJTV/ref=sr_1_13?dchild=1&keywords=awair&qid=1591168329&sr=8-13) (£260)
+Total cost £86, which is considerably cheaper than commercial devices containing similar sensors, e.g. [uHoo](https://www.amazon.co.uk/uHoo-Indoor-Air-Quality-Sensor/dp/B076PV9X99/ref=sr_1_1?dchild=1&keywords=uhoo&qid=1591168294&sr=8-1) (£325) or [Kaiterra](https://www.amazon.co.uk/Kaiterra-Measures-Chemicals%EF%BC%8C-Temperature-Compatible-Whilte-Gold/dp/B077JWYJTV/ref=sr_1_13?dchild=1&keywords=awair&qid=1591168329&sr=8-13) (£260)
 
 ## My study
 I live on a road that can get congested during rush hour, and I want to know if the pollution in the house is rasied during these times. I have the Enviro+ on a windowsill streetside. I've only just started capturing data, and also owing to covid lock-down there is hardly any traffic. Will post updates in future. 
