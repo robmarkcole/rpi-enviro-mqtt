@@ -28,48 +28,51 @@ nohup python3 /home/pi/yourdir/mqtt-all.py --broker 192.168.1.164 --topic enviro
 TODO add service file.
 
 ## Home Assistant integration
-I personally am using [home-assistant](https://www.home-assistant.io/) to receive and log the enviro mqtt data. The benefits are: logging to `.db` sqlite file & graphing. Simply configure an mqtt-sensor on the `enviro` topic (or whatever you selected) and break out the individual readings using a template. Example below:
+I personally am using [home-assistant](https://www.home-assistant.io/) to receive and log the enviro mqtt data. The benefits are: logging to `.db` sqlite file & graphing. Simply configure an mqtt-sensor on the `enviro` topic (or whatever you selected) and break out the individual readings using a template. Example below, in `sensor.yaml`:
 
 ```yaml
-sensor:
-  - platform: mqtt
-    name: "enviro"
-    state_topic: "enviro"
-
-  - platform: mqtt
-    state_topic: "enviro"
-    value_template: "{{ value_json.temperature }}"
-    name: "enviro_temperature"
-    unit_of_measurement: '°C'
-    icon: "mdi:thermometer"
-
-  - platform: mqtt
-    state_topic: "enviro"
-    value_template: "{{ value_json.humidity }}"
-    name: "enviro_humidity"
-    unit_of_measurement: '%'
-    icon: "mdi:water-percent"
-
-  - platform: mqtt
-    state_topic: "enviro"
-    value_template: "{{ value_json.pressure }}"
-    name: "enviro_pressure"
-    unit_of_measurement: 'Pa'
-    icon: "mdi:arrow-down-bold"
-
-  - platform: mqtt
-    state_topic: "enviro"
-    value_template: "{{ value_json.pm25 }}"
-    name: "enviro_pm2"
-    unit_of_measurement: 'pm'
-    icon: "mdi:thought-bubble"
-
-  - platform: mqtt
-    state_topic: "enviro"
-    value_template: "{{ value_json.pm10 }}"
-    name: "enviro_pm10"
-    unit_of_measurement: 'pm'
-    icon: "mdi:thought-bubble-outline"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.pm10 }}"
+  name: "enviro_pm10"
+  unit_of_measurement: 'pm'
+  icon: "mdi:thought-bubble-outline"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.pm25 }}"
+  name: "enviro_pm2"
+  unit_of_measurement: 'pm'
+  icon: "mdi:thought-bubble"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.humidity }}"
+  name: "enviro_humidity"
+  unit_of_measurement: '%'
+  icon: "mdi:water-percent"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.pressure }}"
+  name: "enviro_pressure"
+  unit_of_measurement: 'Pa'
+  icon: "mdi:arrow-down-bold"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.temperature }}"
+  name: "enviro_temperature"
+  unit_of_measurement: 'C'
+  icon: "mdi:thermometer"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.lux }}"
+  name: "enviro_lux"
+  unit_of_measurement: 'lx'
+  icon: "mdi:weather-sunny"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.nh3 }}"
+  name: "enviro_nh3"
+  unit_of_measurement: 'nh3'
+  icon: "mdi:thought-bubble"
 ```
 
 Using the created entities you can add an entity card like the following:
