@@ -10,6 +10,7 @@ import ST7735
 import time
 from bme280 import BME280
 from pms5003 import PMS5003, ReadTimeoutError
+from enviroplus import gas
 from subprocess import PIPE, Popen, check_output
 from PIL import Image, ImageDraw, ImageFont
 from fonts.ttf import RobotoMedium as UserFont
@@ -64,6 +65,10 @@ def read_values(bme280, pms5003):
         pm_values = pms5003.read()
         values["P2"] = pm_values.pm_ug_per_m3(2.5)
         values["P1"] = pm_values.pm_ug_per_m3(10)
+    data = gas.read_all()
+    values["oxidised"] = int(data.oxidising / 1000)
+    values["reduced"] = int(data.reducing / 1000)
+    values["nh3"] = int(data.nh3 / 1000)
     return values
 
 
