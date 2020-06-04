@@ -51,8 +51,7 @@ def read_values(bme280, pms5003):
     raw_temp = bme280.get_temperature()  # float
     comp_temp = raw_temp - ((cpu_temp - raw_temp) / comp_factor)
     values["temperature"] = int(comp_temp)
-    values["pressure"] = int(
-        round(bme280.get_pressure() * 100), -1
+    values["pressure"] = round(int(bme280.get_pressure() * 100), -1)
     )  # round to nearest 10
     values["humidity"] = int(bme280.get_humidity())
     try:
