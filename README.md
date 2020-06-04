@@ -2,13 +2,13 @@
 Send air quality data from a Pimoroni RPi [Enviro+](https://shop.pimoroni.com/products/enviro) over [MQTT](http://mqtt.org/).
 
 <p align="center">
-<img src="https://github.com/robmarkcole/rpi-enviro-mqtt/blob/master/assets/rpi_enviro.jpg" width="400">
+<img src="https://github.com/robmarkcole/rpi-enviro-mqtt/blob/master/assets/rpi_enviro.jpg" width="600">
 </p>
 
 The `mqtt-all.py` script is a fork of the official [luftdaten.py](https://github.com/pimoroni/enviroplus-python/blob/master/examples/luftdaten.py) script. The main difference being that this script uses MQTT to publish data over the local network (vs internet to Luftdaten) so there no dependency on internet connection. Also since you don't need to poll the Luftdaten website for data, latency is almost eliminated and you can visualise data in real time, using a tool like [mqtt-explorer](https://mqtt-explorer.com/) (screenshot below).
 
 <p align="center">
-<img src="https://github.com/robmarkcole/rpi-enviro-mqtt/blob/master/assets/mqtt-explorer-usage.png" width="800">
+<img src="https://github.com/robmarkcole/rpi-enviro-mqtt/blob/master/assets/mqtt-explorer-usage.png" width="1000">
 </p>
 
 ## Installation & setup
