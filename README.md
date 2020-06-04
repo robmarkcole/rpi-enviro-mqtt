@@ -33,6 +33,12 @@ I personally am using [home-assistant](https://www.home-assistant.io/) to receiv
 ```yaml
 - platform: mqtt
   state_topic: "enviroplus"
+  value_template: "{{ value_json.pm1 }}"
+  name: "enviro_pm1"
+  unit_of_measurement: 'pm'
+  icon: "mdi:thought-bubble-outline"
+- platform: mqtt
+  state_topic: "enviroplus"
   value_template: "{{ value_json.pm10 }}"
   name: "enviro_pm10"
   unit_of_measurement: 'pm'
@@ -72,6 +78,18 @@ I personally am using [home-assistant](https://www.home-assistant.io/) to receiv
   value_template: "{{ value_json.nh3 }}"
   name: "enviro_nh3"
   unit_of_measurement: 'nh3'
+  icon: "mdi:thought-bubble"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.reduced }}"
+  name: "enviro_reduced"
+  unit_of_measurement: 'CO'
+  icon: "mdi:thought-bubble"
+- platform: mqtt
+  state_topic: "enviroplus"
+  value_template: "{{ value_json.oxidised }}"
+  name: "enviro_oxidised "
+  unit_of_measurement: 'no2'
   icon: "mdi:thought-bubble"
 ```
 
