@@ -58,13 +58,15 @@ def read_values(bme280, pms5003):
     values["humidity"] = int(bme280.get_humidity())
     try:
         pm_values = pms5003.read()  # int
-        values["P2"] = pm_values.pm_ug_per_m3(2.5)
-        values["P1"] = pm_values.pm_ug_per_m3(10)
+        values["pm1"] = pm_values.pm_ug_per_m3(1)
+        values["pm25"] = pm_values.pm_ug_per_m3(2.5)
+        values["pm10"] = pm_values.pm_ug_per_m3(10)
     except ReadTimeoutError:
         pms5003.reset()
         pm_values = pms5003.read()
-        values["P2"] = pm_values.pm_ug_per_m3(2.5)
-        values["P1"] = pm_values.pm_ug_per_m3(10)
+        values["pm1"] = pm_values.pm_ug_per_m3(1)
+        values["pm25"] = pm_values.pm_ug_per_m3(2.5)
+        values["pm10"] = pm_values.pm_ug_per_m3(10)
     data = gas.read_all()
     values["oxidised"] = int(data.oxidising / 1000)
     values["reduced"] = int(data.reducing / 1000)
