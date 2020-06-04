@@ -48,13 +48,15 @@ def read_values(bme280, pms5003):
 
     values = {}
     cpu_temp = get_cpu_temperature()
-    raw_temp = bme280.get_temperature()
+    raw_temp = bme280.get_temperature()  # float
     comp_temp = raw_temp - ((cpu_temp - raw_temp) / comp_factor)
-    values["temperature"] = float("{:.2f}".format(comp_temp))
-    values["pressure"] = float("{:.2f}".format(bme280.get_pressure() * 100))
-    values["humidity"] = float("{:.2f}".format(bme280.get_humidity()))
+    values["temperature"] = int(comp_temp)
+    values["pressure"] = round(
+        int(bme280.get_pressure() * 100), -1
+    )  # round to nearest 10
+    values["humidity"] = int(bme280.get_humidity())
     try:
-        pm_values = pms5003.read()
+        pm_values = pms5003.read()  # int
         values["P2"] = pm_values.pm_ug_per_m3(2.5)
         values["P1"] = pm_values.pm_ug_per_m3(10)
     except ReadTimeoutError:
