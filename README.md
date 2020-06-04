@@ -59,16 +59,16 @@ sensor:
 
   - platform: mqtt
     state_topic: "enviro"
-    value_template: "{{ value_json.P2 }}"
+    value_template: "{{ value_json.pm25 }}"
     name: "enviro_pm2"
-    unit_of_measurement: ''
+    unit_of_measurement: 'pm'
     icon: "mdi:thought-bubble"
 
   - platform: mqtt
     state_topic: "enviro"
-    value_template: "{{ value_json.P1 }}"
+    value_template: "{{ value_json.pm10 }}"
     name: "enviro_pm10"
-    unit_of_measurement: ''
+    unit_of_measurement: 'pm'
     icon: "mdi:thought-bubble-outline"
 ```
 
