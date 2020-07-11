@@ -201,9 +201,11 @@ def main():
         pms5003 = PMS5003()
         pm_values = pms5003.read()
         HAS_PMS = True
+        print("PMS5003 sensor is connected")
     except SerialTimeoutError:
-        print("No PMS5003 sensor found")
+        print("No PMS5003 sensor connected")
 
+    print(f"HAS_PMS: {HAS_PMS}")
     # Raspberry Pi ID
     device_serial_number = get_serial_number()
     id = "raspi-" + device_serial_number
