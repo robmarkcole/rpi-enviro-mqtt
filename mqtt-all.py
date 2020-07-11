@@ -160,17 +160,24 @@ def main():
     )
     args = parser.parse_args()
 
-    print(f"""mqtt-all.py - Reads Enviro plus data and sends over mqtt.
+    # Raspberry Pi ID
+    device_serial_number = get_serial_number()
+    device_id = "raspi-" + device_serial_number
+
+    print(
+        f"""mqtt-all.py - Reads Enviro plus data and sends over mqtt.
 
     broker: {args.broker}
+    client_id: {device_id}
     port: {args.port}
     topic: {args.topic}
 
     Press Ctrl+C to exit!
 
     """
+    )
 
-    mqtt_client = mqtt.Client()
+    mqtt_client = mqtt.Client(client_id=device_id)
     mqtt_client.on_connect = on_connect
     mqtt_client.on_publish = on_publish
     mqtt_client.connect(args.broker, port=args.port)
@@ -197,10 +204,6 @@ def main():
         print("PMS5003 sensor is connected")
     except SerialTimeoutError:
         print("No PMS5003 sensor connected")
-
-    # Raspberry Pi ID
-    device_serial_number = get_serial_number()
-    # device_id = "raspi-" + device_serial_number
 
     # Display Raspberry Pi serial and Wi-Fi status
     print("RPi serial: {}".format(device_serial_number))
