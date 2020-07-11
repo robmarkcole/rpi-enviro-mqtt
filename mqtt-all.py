@@ -38,6 +38,8 @@ DEFAULT_MQTT_BROKER_IP = "localhost"
 DEFAULT_MQTT_BROKER_PORT = 1883
 DEFAULT_MQTT_TOPIC = "enviroplus"
 
+HAS_PMS = False
+
 # mqtt callbacks
 def on_connect(client, userdata, flags, rc):
     print(f"CONNACK received with code {rc}")
@@ -86,7 +88,9 @@ def read_values(bme280, pms5003):
 
 # Get CPU temperature to use for compensation
 def get_cpu_temperature():
-    process = Popen(["vcgencmd", "measure_temp"], stdout=PIPE, universal_newlines=True)
+    process = Popen(
+        ["vcgencmd", "measure_temp"], stdout=PIPE, universal_newlines=True
+    )
     output, _error = process.communicate()
     return float(output[output.index("=") + 1 : output.rindex("'")])
 
@@ -120,7 +124,9 @@ def display_status(disp, mqtt_broker):
     text_colour = (255, 255, 255)
     back_colour = (0, 170, 170) if check_wifi() else (85, 15, 15)
     id = get_serial_number()
-    message = "{}\nWi-Fi: {}\nmqtt-broker: {}".format(id, wifi_status, mqtt_broker)
+    message = "{}\nWi-Fi: {}\nmqtt-broker: {}".format(
+        id, wifi_status, mqtt_broker
+    )
     img = Image.new("RGB", (WIDTH, HEIGHT), color=(0, 0, 0))
     draw = ImageDraw.Draw(img)
     size_x, size_y = draw.textsize(message, font)
@@ -132,12 +138,20 @@ def display_status(disp, mqtt_broker):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Publish enviroplus values over mqtt")
-    parser.add_argument(
-        "--broker", default=DEFAULT_MQTT_BROKER_IP, type=str, help="mqtt broker IP",
+    parser = argparse.ArgumentParser(
+        description="Publish enviroplus values over mqtt"
     )
     parser.add_argument(
-        "--port", default=DEFAULT_MQTT_BROKER_PORT, type=int, help="mqtt broker port",
+        "--broker",
+        default=DEFAULT_MQTT_BROKER_IP,
+        type=str,
+        help="mqtt broker IP",
+    )
+    parser.add_argument(
+        "--port",
+        default=DEFAULT_MQTT_BROKER_PORT,
+        type=int,
+        help="mqtt broker port",
     )
     parser.add_argument(
         "--topic", default=DEFAULT_MQTT_TOPIC, type=str, help="mqtt topic"
@@ -178,7 +192,11 @@ def main():
     disp.begin()
 
     # Create PMS5003 instance
-    pms5003 = PMS5003()
+    try:
+        pms5003 = PMS5003()
+        HAS_PMS = True
+    except Exception as exc:
+        raise exc
 
     # Raspberry Pi ID
     device_serial_number = get_serial_number()
