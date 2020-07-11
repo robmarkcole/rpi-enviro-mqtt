@@ -127,9 +127,9 @@ def display_status(disp, mqtt_broker):
     wifi_status = "connected" if check_wifi() else "disconnected"
     text_colour = (255, 255, 255)
     back_colour = (0, 170, 170) if check_wifi() else (85, 15, 15)
-    id = get_serial_number()
+    device_serial_number = get_serial_number()
     message = "{}\nWi-Fi: {}\nmqtt-broker: {}".format(
-        id, wifi_status, mqtt_broker
+        device_serial_number, wifi_status, mqtt_broker
     )
     img = Image.new("RGB", (WIDTH, HEIGHT), color=(0, 0, 0))
     draw = ImageDraw.Draw(img)
@@ -162,21 +162,22 @@ def main():
     )
     args = parser.parse_args()
 
-    print(
-        """mqtt-all.py - Reads Enviro plus data and sends over mqtt.
+    # Raspberry Pi ID
+    device_serial_number = get_serial_number()
+    device_id = "raspi-" + device_serial_number
 
-    broker: {}
-    port: {}
-    topic: {}
+    print(f"""mqtt-all.py - Reads Enviro plus data and sends over mqtt.
+
+    broker: {args.broker}
+    client ID: {device_id}
+    port: {args.port}
+    topic: {args.topic}
 
     Press Ctrl+C to exit!
 
-    """.format(
-            args.broker, args.port, args.topic
-        )
-    )
+    """
 
-    mqtt_client = mqtt.Client()
+    mqtt_client = mqtt.Client(client_id=device_id)
     mqtt_client.on_connect = on_connect
     mqtt_client.on_publish = on_publish
     mqtt_client.connect(args.broker, port=args.port)
@@ -203,11 +204,6 @@ def main():
         print("PMS5003 sensor is connected")
     except SerialTimeoutError:
         print("No PMS5003 sensor connected")
-
-    print(f"HAS_PMS: {HAS_PMS}")
-    # Raspberry Pi ID
-    device_serial_number = get_serial_number()
-    id = "raspi-" + device_serial_number
 
     # Display Raspberry Pi serial and Wi-Fi status
     print("RPi serial: {}".format(device_serial_number))
