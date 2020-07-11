@@ -222,6 +222,9 @@ def main():
         try:
             time_since_update = time.time() - update_time
             values = read_bme280(bme280)
+            if HAS_PMS:
+                pms_values = read_pms5003(pms5003)
+                values.update(pms_values)
             values["serial"] = device_serial_number
             print(values)
             mqtt_client.publish(args.topic, json.dumps(values))
