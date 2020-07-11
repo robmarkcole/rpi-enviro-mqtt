@@ -15,9 +15,9 @@ The `mqtt-all.py` script is a fork of the official [luftdaten.py](https://github
 You should first install the Pimoroni [enviroplus-python](https://github.com/pimoroni/enviroplus-python) library. There is one additional dependency required for this script, which is [paho-mqtt](http://www.eclipse.org/paho/). This can be installed with `pip3 install paho-mqtt`. You need an MQTT broker to receive the data, if you haven't already set one up, a broker can be installed on the rpi with `sudo apt-get install mosquitto mosquitto-clients`. Note this broker will run at startup automatically, which is very convenient. Note also that this broker is unsecured by default, and that this code is only for personal (not professional) use on a secure local network. You should publish some MQTT data from the command line to check the broker is functioning, and verify receipt of this data using the tool of your choice (e.g. mqtt-explorer). Your device is assigned an [MQTT client_id](https://www.cloudmqtt.com/blog/2018-11-21-mqtt-what-is-client-id.html) of format `raspi-device_serial_number`. Clone this repo to your rpi, making note of the path to `mqtt-all.py`
 
 ## Run the `mqtt-all.py` script
-From the terminal you can run the script with:
+From the terminal you can run the script with readings every 5 seconds:
 ```
-python3 /home/pi/yourdir/mqtt-all.py --broker localhost --port 1883 --topic enviroplus
+python3 /home/pi/yourdir/mqtt-all.py --broker localhost --port 1883 --topic enviroplus --interval 5
 ```
 
 Note that the arguments passed here are the defaults, and just shown as an example. If you are issuing this command over SSH you probably want it to continue after you disconnect. This [can be achieved](https://raspberrypi.stackexchange.com/questions/29348/keep-process-running-after-close-session) by using `nohup`, so for example you would issue command:
