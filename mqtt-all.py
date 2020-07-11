@@ -40,7 +40,6 @@ DEFAULT_MQTT_TOPIC = "enviroplus"
 
 # mqtt callbacks
 def on_connect(client, userdata, flags, rc):
-    print(f"CONNACK received with code {rc}")
     if rc == 0:
         print("connected OK")
     else:
@@ -55,7 +54,6 @@ def on_publish(client, userdata, mid):
 def read_bme280(bme280):
     # Compensation factor for temperature
     comp_factor = 2.25
-
     values = {}
     cpu_temp = get_cpu_temperature()
     raw_temp = bme280.get_temperature()  # float
@@ -162,14 +160,9 @@ def main():
     )
     args = parser.parse_args()
 
-    # Raspberry Pi ID
-    device_serial_number = get_serial_number()
-    device_id = "raspi-" + device_serial_number
-
     print(f"""mqtt-all.py - Reads Enviro plus data and sends over mqtt.
 
     broker: {args.broker}
-    client ID: {device_id}
     port: {args.port}
     topic: {args.topic}
 
@@ -177,7 +170,7 @@ def main():
 
     """
 
-    mqtt_client = mqtt.Client(client_id=device_id)
+    mqtt_client = mqtt.Client()
     mqtt_client.on_connect = on_connect
     mqtt_client.on_publish = on_publish
     mqtt_client.connect(args.broker, port=args.port)
@@ -204,6 +197,10 @@ def main():
         print("PMS5003 sensor is connected")
     except SerialTimeoutError:
         print("No PMS5003 sensor connected")
+
+    # Raspberry Pi ID
+    device_serial_number = get_serial_number()
+    # device_id = "raspi-" + device_serial_number
 
     # Display Raspberry Pi serial and Wi-Fi status
     print("RPi serial: {}".format(device_serial_number))
