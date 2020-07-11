@@ -38,8 +38,6 @@ DEFAULT_MQTT_BROKER_IP = "localhost"
 DEFAULT_MQTT_BROKER_PORT = 1883
 DEFAULT_MQTT_TOPIC = "enviroplus"
 
-HAS_PMS = False
-
 # mqtt callbacks
 def on_connect(client, userdata, flags, rc):
     print(f"CONNACK received with code {rc}")
@@ -197,6 +195,7 @@ def main():
     disp.begin()
 
     # Try to create PMS5003 instance
+    HAS_PMS = False
     try:
         pms5003 = PMS5003()
         pm_values = pms5003.read()
