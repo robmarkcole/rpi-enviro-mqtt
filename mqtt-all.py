@@ -37,6 +37,7 @@ except ImportError:
 DEFAULT_MQTT_BROKER_IP = "localhost"
 DEFAULT_MQTT_BROKER_PORT = 1883
 DEFAULT_MQTT_TOPIC = "enviroplus"
+DEFAULT_READ_INTERVAL = 5
 
 # mqtt callbacks
 def on_connect(client, userdata, flags, rc):
@@ -119,7 +120,7 @@ def display_status(disp, mqtt_broker):
     WIDTH = disp.width
     HEIGHT = disp.height
     # Text settings
-    font_size = 16
+    font_size = 12
     font = ImageFont.truetype(UserFont, font_size)
 
     wifi_status = "connected" if check_wifi() else "disconnected"
@@ -157,6 +158,12 @@ def main():
     )
     parser.add_argument(
         "--topic", default=DEFAULT_MQTT_TOPIC, type=str, help="mqtt topic"
+    )
+    parser.add_argument(
+        "--interval",
+        default=DEFAULT_READ_INTERVAL,
+        type=int,
+        help="the read interval in seconds",
     )
     args = parser.parse_args()
 
@@ -228,6 +235,7 @@ def main():
             if time_since_update > 145:
                 update_time = time.time()
             display_status(disp, args.broker)
+            time.sleep(args.interval)
         except Exception as e:
             print(e)
 
