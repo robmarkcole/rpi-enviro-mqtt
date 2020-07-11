@@ -194,9 +194,10 @@ def main():
     # Create PMS5003 instance
     try:
         pms5003 = PMS5003()
+        pm_values = pms5003.read()
         HAS_PMS = True
-    except Exception as exc:
-        raise exc
+    except ReadTimeoutError:
+        print("No PMS5003 sensor found")
 
     # Raspberry Pi ID
     device_serial_number = get_serial_number()
