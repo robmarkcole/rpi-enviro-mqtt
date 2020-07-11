@@ -9,7 +9,7 @@ import argparse
 import ST7735
 import time
 from bme280 import BME280
-from pms5003 import PMS5003, ReadTimeoutError
+from pms5003 import PMS5003, ReadTimeoutError, SerialTimeoutError
 from enviroplus import gas
 
 try:
@@ -159,8 +159,7 @@ def main():
     args = parser.parse_args()
 
     print(
-        """mqtt-all.py - Reads temperature, pressure, humidity,
-    PM2.5, and PM10 from Enviro plus and sends data over mqtt.
+        """mqtt-all.py - Reads Enviro plus data and sends over mqtt.
 
     broker: {}
     port: {}
@@ -191,12 +190,12 @@ def main():
     # Initialize display
     disp.begin()
 
-    # Create PMS5003 instance
+    # Try to create PMS5003 instance
     try:
         pms5003 = PMS5003()
         pm_values = pms5003.read()
         HAS_PMS = True
-    except ReadTimeoutError:
+    except SerialTimeoutError:
         print("No PMS5003 sensor found")
 
     # Raspberry Pi ID
@@ -204,7 +203,7 @@ def main():
     id = "raspi-" + device_serial_number
 
     # Display Raspberry Pi serial and Wi-Fi status
-    print("Raspberry Pi serial: {}".format(get_serial_number()))
+    print("RPi serial: {}".format(device_serial_number)
     print("Wi-Fi: {}\n".format("connected" if check_wifi() else "disconnected"))
     print("MQTT broker IP: {}".format(args.broker))
 
