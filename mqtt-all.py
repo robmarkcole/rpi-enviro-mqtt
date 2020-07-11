@@ -53,8 +53,8 @@ def on_publish(client, userdata, mid):
     print("mid: " + str(mid))
 
 
-# Read values from BME280 and PMS5003 and return as dict
-def read_values(bme280, pms5003):
+# Read values from BME280 and return as dict
+def read_bme280(bme280):
     # Compensation factor for temperature
     comp_factor = 2.25
 
@@ -67,6 +67,17 @@ def read_values(bme280, pms5003):
         int(bme280.get_pressure() * 100), -1
     )  # round to nearest 10
     values["humidity"] = int(bme280.get_humidity())
+    data = gas.read_all()
+    values["oxidised"] = int(data.oxidising / 1000)
+    values["reduced"] = int(data.reducing / 1000)
+    values["nh3"] = int(data.nh3 / 1000)
+    values["lux"] = int(ltr559.get_lux())
+    return values
+
+
+# Read values PMS5003 and return as dict
+def read_pms5003(pms5003):
+    values = {}
     try:
         pm_values = pms5003.read()  # int
         values["pm1"] = pm_values.pm_ug_per_m3(1)
@@ -78,11 +89,6 @@ def read_values(bme280, pms5003):
         values["pm1"] = pm_values.pm_ug_per_m3(1)
         values["pm25"] = pm_values.pm_ug_per_m3(2.5)
         values["pm10"] = pm_values.pm_ug_per_m3(10)
-    data = gas.read_all()
-    values["oxidised"] = int(data.oxidising / 1000)
-    values["reduced"] = int(data.reducing / 1000)
-    values["nh3"] = int(data.nh3 / 1000)
-    values["lux"] = int(ltr559.get_lux())
     return values
 
 
@@ -215,7 +221,7 @@ def main():
     while True:
         try:
             time_since_update = time.time() - update_time
-            values = read_values(bme280, pms5003)
+            values = read_bme280(bme280)
             values["serial"] = device_serial_number
             print(values)
             mqtt_client.publish(args.topic, json.dumps(values))
