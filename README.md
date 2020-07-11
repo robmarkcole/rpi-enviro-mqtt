@@ -24,6 +24,7 @@ Note that the arguments passed here are the defaults, and just shown as an examp
 ```
 nohup python3 /home/pi/yourdir/mqtt-all.py --broker 192.168.1.164 --topic enviro &
 ```
+To see the process ID run `top`, and you can then kill the nohup process by running `sudo kill -9 PID` where PID is the process ID of the running python process.
 
 TODO add service file.
 
