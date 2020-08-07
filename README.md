@@ -17,19 +17,52 @@ You should first install the Pimoroni [enviroplus-python](https://github.com/pim
 ## Run the `mqtt-all.py` script
 From the terminal you can run the script with readings every 5 seconds:
 ```
-python3 /home/pi/yourdir/mqtt-all.py --broker localhost --port 1883 --topic enviroplus --interval 5
+python3 /home/pi/yourdir/rpi-enviro-mqtt/mqtt-all.py --broker localhost --port 1883 --topic enviroplus --interval 5
 ```
 
-Note that the arguments passed here are the defaults, and just shown as an example. If you are issuing this command over SSH you probably want it to continue after you disconnect. This [can be achieved](https://raspberrypi.stackexchange.com/questions/29348/keep-process-running-after-close-session) by using `nohup`, so for example you would issue command:
-```
-nohup python3 /home/pi/yourdir/mqtt-all.py --broker 192.168.1.164 --topic enviro &
-```
-To see the process ID run `top`, and you can then kill the nohup process by running `sudo kill -9 PID` where PID is the process ID of the running python process.
+Note that the arguments passed here are the defaults, and just shown as an example.
 
-TODO add service file.
+## Run as a service
+You can run the `mqtt-all.py` script as a [service](https://www.raspberrypi.org/documentation/linux/usage/systemd.md), which means it can be configured to automatically start on RPi boot, and can be easily started & stopped. Create the service file in the appropriate location on the RPi using: ```sudo nano /etc/systemd/system/enviro.service```
+
+Entering the following (adapted for your `mqtt-all.py` file location and args):
+```
+[Unit]
+Description=Enviroplus MQTT Logger
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/github/rpi-enviro-mqtt/mqtt-all.py --broker 192.168.1.164 --topic enviroplus --interval 5
+WorkingDirectory=/home/pi/github/rpi-enviro-mqtt
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Once this file has been created you can start the service using:
+```sudo systemctl start enviro.service```
+
+View the status and logs with:
+```sudo systemctl status enviro.service```
+
+Stop the service with:
+```sudo systemctl stop enviro.service```
+
+Restart the service with:
+```sudo systemctl restart enviro.service```
+
+You can have the service auto-start on rpi boot by using:
+```sudo systemctl enable enviro.service```
+
+You can disable auto-start using:
+```sudo systemctl disable enviro.service```
 
 ## Home Assistant integration
-I personally am using [home-assistant](https://www.home-assistant.io/) to receive and log the enviro mqtt data. The benefits are: logging to `.db` sqlite file & graphing. Simply configure an mqtt-sensor on the `enviro` topic (or whatever you selected) and break out the individual readings using a template. Example below, and assuming you have a PMS5003 attached, in `sensor.yaml`:
+I am using [home-assistant](https://www.home-assistant.io/) to receive and log the enviro mqtt data. The benefits are: logging to `.db` sqlite file & graphing. Simply configure an mqtt-sensor on the `enviro` topic (or whatever you selected) and break out the individual readings using a template. Example below, and assuming you have a PMS5003 attached, in `sensor.yaml`:
 
 ```yaml
 - platform: mqtt
