@@ -144,3 +144,6 @@ Total cost £86, which is considerably cheaper than commercial devices containin
 
 ## My study
 I live on a road that can get congested during rush hour, and I want to know if the pollution in the house is rasied during these times. I have the Enviro+ on a windowsill streetside. I've only just started capturing data, and also owing to covid lock-down there is hardly any traffic. Analytics of my data is in the `analytics` folder of this repo.
+
+## Publication
+This setup was used in the following publication: [Indoor Air Pollution from Residential Stoves: Examining the Flooding of Particulate Matter into Homes during Real-World Use](https://www.mdpi.com/2073-4433/11/12/1326)
