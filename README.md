@@ -147,3 +147,8 @@ I live on a road that can get congested during rush hour, and I want to know if 
 
 ## Publication
 This setup was used in the following publication: [Indoor Air Pollution from Residential Stoves: Examining the Flooding of Particulate Matter into Homes during Real-World Use](https://www.mdpi.com/2073-4433/11/12/1326)
+
+## Presentation
+My former colleage Oliver Crask ([@olivercrask](https://github.com/olivercrask)) presented on IAQ monitoring with the PMS sensor at an event in London in 2018, and the pdf presentation is included in this repo. A video of the presentation is below:
+
+[![](http://img.youtube.com/vi/o9F9eG62nR4/0.jpg)](https://www.youtube.com/watch?v=o9F9eG62nR4 "")
