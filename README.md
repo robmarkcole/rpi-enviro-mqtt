@@ -1,5 +1,8 @@
+**Note this repo is archived as it is no longer maintained and contains [a known issue](https://github.com/robmarkcole/rpi-enviro-mqtt/issues/23). A maintained and fixed `mqtt-all.py` script is in the pimoroni repo [here](https://github.com/pimoroni/enviroplus-python/blob/master/examples/mqtt-all.py)**
+
 # rpi-enviro-mqtt
-Send air quality data from a Pimoroni RPi [Enviro+](https://shop.pimoroni.com/products/enviro) over [MQTT](http://mqtt.org/). This script works with the Enviroplus with or without the PMS5003 sensor attached. **Note that the `mqtt-all.py` script is now included in the pimoroni repo [here](https://github.com/pimoroni/enviroplus-python/blob/master/examples/mqtt-all.py)**
+
+Send air quality data from a Pimoroni RPi [Enviro+](https://shop.pimoroni.com/products/enviro) over [MQTT](http://mqtt.org/). This script works with the Enviroplus with or without the PMS5003 sensor attached. 
 
 <p align="center">
 <img src="https://github.com/robmarkcole/rpi-enviro-mqtt/blob/master/assets/rpi_enviro.jpg" width="600">
